@@ -56,7 +56,7 @@ footer a{margin:0 8px}
   </svg>
 </div>
 <h1>Play the circus anywhere.</h1>
-<a class="btn" id="playBtn" href="https://mrcuci-v3.connectn.workers.dev/">Play free now</a>
+<a class="btn" id="playBtn" href="#">Play free now</a>
 <small>Free to play on iPhone and Android.</small>
 <footer>© 2026 Pocket Circus · Rating: to be confirmed · Optional in-game purchases<br><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Support</a></footer>
 <div class="modal-backdrop" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
@@ -76,7 +76,6 @@ footer a{margin:0 8px}
   </div>
 </div>
 <script>
-const TARGET_URL='https://mrcuci-v3.connectn.workers.dev/';
 const SHEET_ENDPOINT='https://script.google.com/macros/s/AKfycbzQH3GTaXNREeLgnal_uAMKdxzzJX_QWjpEkxhDuOpmng2cFDBnaevGqlbfrLMstoRS/exec';
 const playBtn=document.getElementById('playBtn');
 const modal=document.getElementById('leadModal');
@@ -107,7 +106,9 @@ form.addEventListener('submit',async function(e){
       headers:{'Content-Type':'text/plain;charset=utf-8'},
       body:JSON.stringify(payload)
     });
-    window.location.assign(TARGET_URL);
+    submitBtn.disabled=false;
+    submitBtn.textContent='Submitted';
+    form.reset();
   }catch(err){
     submitBtn.disabled=false;
     submitBtn.textContent=originalText;
