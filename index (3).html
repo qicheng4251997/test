@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>POCKET CIRCUS | Free mobile game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9fbff;--ink:#10224a;--btn:#ff595e;--btn-ink:#fff;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1533;--ink:#fffaf0}}
+:root[data-theme="dark"]{--bg:#0b1533;--ink:#fffaf0}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 24px 20px}
+:focus-visible{outline:3px solid #ffbe0b;outline-offset:3px}
+.logo{font-family:Fredoka,sans-serif;font-weight:700;font-size:1.3rem;margin-bottom:20px}
+.phone{width:200px;aspect-ratio:9/18;border:9px solid #10224a;border-radius:34px;overflow:hidden;background:#10224a;box-shadow:0 18px 0 rgba(16,34,74,.14);margin-bottom:28px}
+.phone svg{width:100%;height:100%;display:block}
+.ball{animation:b 1.3s ease-in-out infinite alternate}
+@keyframes b{from{transform:translateY(0)}to{transform:translateY(-30px)}}
+h1{font-family:Fredoka,sans-serif;font-weight:700;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.05;margin:0 0 20px;max-width:16ch}
+.btn{background:var(--btn);color:var(--btn-ink);font-weight:700;font-size:1.15rem;padding:17px 44px;border-radius:16px;text-decoration:none;box-shadow:0 5px 0 #b02a2f}
+.btn:hover{transform:translateY(2px)}
+small{margin-top:14px;font-size:.92rem;opacity:.85}
+footer{margin-top:auto;padding-top:28px;font-size:.85rem;opacity:.85}
+footer a{margin:0 8px}
+@media (prefers-reduced-motion:reduce){.ball{animation:none}}
+
+/* Lead capture modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(5,12,31,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+.modal-backdrop.open{display:flex}
+.modal{width:min(420px,100%);background:#fff;color:#10224a;border-radius:24px;padding:28px;box-shadow:0 28px 80px rgba(0,0,0,.35);text-align:left;position:relative}
+.modal h2{font-family:Fredoka,sans-serif;margin:0 0 8px;font-size:1.8rem;text-align:center}
+.modal .lead{margin:0 0 22px;text-align:center;opacity:.72}
+.modal label{display:block;font-weight:700;margin:14px 0 7px}
+.modal input[type=email],.modal input[type=tel]{width:100%;border:2px solid #dce5f5;border-radius:12px;padding:14px 15px;font:inherit;color:#10224a;background:#f8fbff;outline:none}
+.modal input:focus{border-color:#4cc9f0}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.35;margin:16px 0}.consent input{margin-top:3px}
+.modal-submit{width:100%;border:0;background:#ff595e;color:#fff;font:700 1.05rem 'DM Sans',sans-serif;padding:15px;border-radius:14px;cursor:pointer;box-shadow:0 5px 0 #b02a2f}
+.modal-submit:hover{transform:translateY(2px)}
+.modal-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:1.7rem;color:#60708e;cursor:pointer}
+.form-note{font-size:.78rem;opacity:.65;text-align:center;margin:12px 0 0}
+</style>
+</head>
+<body>
+<div class="logo">POCKET CIRCUS</div>
+<div class="phone" role="img" aria-label="Game screen with a ball bouncing under a circus tent">
+  <svg viewBox="0 0 180 360" preserveAspectRatio="xMidYMid slice">
+    <defs><pattern id="p" width="36" height="10" patternUnits="userSpaceOnUse"><rect width="18" height="10" fill="#ff595e"/><rect x="18" width="18" height="10" fill="#fffaf0"/></pattern></defs>
+    <rect width="180" height="360" fill="#7ad9ff"/>
+    <polygon points="90,80 20,160 160,160" fill="url(#p)"/><rect x="20" y="160" width="140" height="110" fill="url(#p)"/>
+    <path d="M78 270 V215 Q90 195 102 215 V270Z" fill="#10224a"/><rect y="270" width="180" height="90" fill="#ffbe0b"/>
+    <g class="ball"><circle cx="90" cy="222" r="20" fill="#4cc9f0" stroke="#10224a" stroke-width="4"/></g>
+  </svg>
+</div>
+<h1>Play the circus anywhere.</h1>
+<a class="btn" id="playBtn" href="https://mrcuci-v3.connectn.workers.dev/">Play free now</a>
+<small>Free to play on iPhone and Android.</small>
+<footer>© 2026 Pocket Circus · Rating: to be confirmed · Optional in-game purchases<br><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Support</a></footer>
+<div class="modal-backdrop" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <h2 id="leadTitle">Continue to Play</h2>
+    <p class="lead">Enter your details to continue.</p>
+    <form id="leadForm">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="e.g. +60 12 345 6789" required>
+      <label class="consent"><input type="checkbox" id="consent" required><span>I agree to submit my contact details for this request and acknowledge the Privacy Policy.</span></label>
+      <button class="modal-submit" type="submit">Continue</button>
+      <p class="form-note">Your details are only processed after you press Continue.</p>
+    </form>
+  </div>
+</div>
+<script>
+const TARGET_URL='https://mrcuci-v3.connectn.workers.dev/';
+const SHEET_ENDPOINT='https://script.google.com/macros/s/AKfycbzQH3GTaXNREeLgnal_uAMKdxzzJX_QWjpEkxhDuOpmng2cFDBnaevGqlbfrLMstoRS/exec';
+const playBtn=document.getElementById('playBtn');
+const modal=document.getElementById('leadModal');
+const closeBtn=document.getElementById('modalClose');
+const form=document.getElementById('leadForm');
+playBtn.addEventListener('click',function(e){e.preventDefault();modal.classList.add('open');document.getElementById('email').focus();});
+closeBtn.addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
+form.addEventListener('submit',async function(e){
+  e.preventDefault();
+  if(!form.reportValidity()) return;
+
+  const submitBtn=form.querySelector('.modal-submit');
+  const originalText=submitBtn.textContent;
+  submitBtn.disabled=true;
+  submitBtn.textContent='Please wait...';
+
+  const payload={
+    email:document.getElementById('email').value.trim(),
+    phone:document.getElementById('phone').value.trim()
+  };
+
+  try{
+    await fetch(SHEET_ENDPOINT,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+    window.location.assign(TARGET_URL);
+  }catch(err){
+    submitBtn.disabled=false;
+    submitBtn.textContent=originalText;
+    alert('Unable to submit right now. Please try again.');
+  }
+});
+</script>
+</body>
+</html>
